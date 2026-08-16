@@ -1,0 +1,42 @@
+{
+  "model_type": "Isolation Forest",
+  "n_estimators": 100,
+  "contamination": 0.05,
+  "category_summary": [
+    {
+      "Category": "DoS",
+      "Total Test Samples": 7458,
+      "Flagged Anomalies": 6060,
+      "Anomaly Detection Rate": "81.26%",
+      "Mean Anomaly Score": "-0.0630"
+    },
+    {
+      "Category": "Normal",
+      "Total Test Samples": 9711,
+      "Flagged Anomalies": 643,
+      "Anomaly Detection Rate": "6.62%",
+      "Mean Anomaly Score": "0.1251"
+    },
+    {
+      "Category": "Probe",
+      "Total Test Samples": 2421,
+      "Flagged Anomalies": 2349,
+      "Anomaly Detection Rate": "97.03%",
+      "Mean Anomaly Score": "-0.0854"
+    },
+    {
+      "Category": "R2L",
+      "Total Test Samples": 2754,
+      "Flagged Anomalies": 141,
+      "Anomaly Detection Rate": "5.12%",
+      "Mean Anomaly Score": "0.0775"
+    },
+    {
+      "Category": "U2R",
+      "Total Test Samples": 200,
+      "Flagged Anomalies": 133,
+      "Anomaly Detection Rate": "66.50%",
+      "Mean Anomaly Score": "-0.0086"
+    }
+  ]
+}
