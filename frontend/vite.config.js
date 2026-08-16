@@ -10,6 +10,6 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    allowedHosts: true,
+    allowedHosts: ['network-intrusion-detection-ipvy.onrender.com', '.onrender.com', 'all', '*'],
   },
 })
