@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    allowedHosts: true,
+    allowedHosts: ['network-intrusion-detection-ipvy.onrender.com', '.onrender.com', 'localhost', '127.0.0.1'],
   },
   preview: {
     host: true,
-    allowedHosts: true,
+    allowedHosts: ['network-intrusion-detection-ipvy.onrender.com', '.onrender.com', 'localhost', '127.0.0.1'],
   },
 })
