@@ -4,10 +4,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable, Image
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+
+PROJECT_ROOT = r"C:\Users\jayas\.gemini\antigravity\scratch\network-intrusion-detection"
 
 def build_pdf(md_filepath, output_pdf):
     with open(md_filepath, 'r', encoding='utf-8') as f:
@@ -116,6 +118,18 @@ def build_pdf(md_filepath, output_pdf):
         spaceAfter=8
     )
 
+    caption_style = ParagraphStyle(
+        'ImageCaption',
+        parent=styles['Normal'],
+        fontName='Helvetica-Oblique',
+        fontSize=8.5,
+        leading=11,
+        textColor=colors.HexColor('#64748b'),
+        alignment=TA_CENTER,
+        spaceBefore=4,
+        spaceAfter=12
+    )
+
     story = []
 
     def clean_md(text):
@@ -125,6 +139,31 @@ def build_pdf(md_filepath, output_pdf):
         text = re.sub(r'`(.*?)`', r'<font face="Courier" color="#0284c7">\1</font>', text)
         return text
 
+    def try_add_image(img_path, caption_text):
+        """Try to embed an image into the PDF. Returns True if successful."""
+        # Resolve relative paths against project root
+        if not os.path.isabs(img_path):
+            img_path = os.path.join(PROJECT_ROOT, img_path)
+        
+        if os.path.exists(img_path):
+            try:
+                # Calculate available width (letter width minus margins)
+                available_width = letter[0] - 108  # 54pt left + 54pt right margin
+                img = Image(img_path, width=available_width, height=available_width * 0.5625)
+                img.hAlign = 'CENTER'
+                story.append(Spacer(1, 8))
+                story.append(img)
+                if caption_text:
+                    story.append(Paragraph(f"<i>{caption_text}</i>", caption_style))
+                story.append(Spacer(1, 8))
+                return True
+            except Exception as e:
+                print(f"Warning: Could not embed image {img_path}: {e}")
+                return False
+        else:
+            print(f"Warning: Image not found at {img_path}")
+            return False
+
     lines = content.split('\n')
     i = 0
     n = len(lines)
@@ -133,6 +172,15 @@ def build_pdf(md_filepath, output_pdf):
         line = lines[i].strip()
 
         if not line:
+            i += 1
+            continue
+
+        # Image embed: ![caption](path)
+        img_match = re.match(r'^!\[(.*?)\]\((.*?)\)$', line)
+        if img_match:
+            caption_text = img_match.group(1)
+            img_path = img_match.group(2)
+            try_add_image(img_path, caption_text)
             i += 1
             continue
 
@@ -197,6 +245,8 @@ def build_pdf(md_filepath, output_pdf):
             story.append(Paragraph(clean_md(line[4:]), h2_style))
         elif line.startswith('#### '):
             story.append(Paragraph(clean_md(line[5:]), h3_style))
+        elif line.startswith('##### '):
+            story.append(Paragraph(clean_md(line[6:]), h3_style))
         elif line.startswith('- ') or line.startswith('* '):
             story.append(Paragraph(f"• {clean_md(line[2:])}", bullet_style))
         elif re.match(r'^\d+\.\s', line):
@@ -206,15 +256,11 @@ def build_pdf(md_filepath, output_pdf):
 
         i += 1
 
-    # Numbered Canvas for Footer
-    class NumberedCanvas:
-        def __init__(self, *args, **kwargs):
-            pass
-
     doc.build(story)
     print(f"Successfully generated PDF: {output_pdf}")
+    print(f"File size: {os.path.getsize(output_pdf):,} bytes")
 
 if __name__ == '__main__':
-    md_file = r"C:\Users\jayas\.gemini\antigravity\scratch\network-intrusion-detection\PROJECT_REPORT.md"
-    pdf_file = r"C:\Users\jayas\.gemini\antigravity\scratch\network-intrusion-detection\PROJECT_REPORT.pdf"
+    md_file = os.path.join(PROJECT_ROOT, "PROJECT_REPORT.md")
+    pdf_file = os.path.join(PROJECT_ROOT, "PROJECT_REPORT.pdf")
     build_pdf(md_file, pdf_file)

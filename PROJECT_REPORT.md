@@ -69,6 +69,7 @@ All preprocessing components (`StandardScaler`, `OneHotEncoder`) are fitted stri
   - [4.11 Implementation Details & Source Code Snippets](#411-implementation-details--source-code-snippets)
   - [4.12 Testing and Verification](#412-testing-and-verification)
   - [4.13 Deployment and Execution](#413-deployment-and-execution)
+  - [4.14 Web Application Screenshots](#414-web-application-screenshots)
 - [5. Learning Outcomes](#5-learning-outcomes)
   - [5.1 Technical Skills](#51-technical-skills)
   - [5.2 Machine Learning & Cybersecurity Understanding](#52-machine-learning--cybersecurity-understanding)
@@ -465,6 +466,48 @@ npm run dev
 
 ---
 
+### 4.14 Web Application Screenshots
+
+The following screenshots illustrate the key web application interfaces of the Cybersecurity Network Threat & Intrusion Profiler system.
+
+#### Screenshot 1: SOC Executive Dashboard
+
+The main dashboard displays executive summary statistics (Total Inspections, Active Threats, Anomalies Flagged, System Health), a Quick Attack Simulator bar with 1-click preset buttons (DoS Neptune, Probe Port Scan, Normal HTTP, R2L Guess), and a real-time Threat Telemetry Log table with color-coded risk level badges (CRITICAL, HIGH, MEDIUM, LOW) and Zero-Day Flag indicators.
+
+![SOC Executive Dashboard — Real-time threat monitoring with executive stat cards, quick attack simulator, and live telemetry log table](screenshots/dashboard_page.jpg)
+
+#### Screenshot 2: Traffic Inspection & Analyzer Tools
+
+The Analyzer page provides a Single Packet Inspector form for manual network feature input (duration, protocol_type, service, flag, src_bytes, dst_bytes, count, srv_count), Preset Attack Loaders for rapid testing, a Batch Stream Flow Inspector for multi-packet JSON analysis, and Prediction Result cards displaying classification output, confidence score, risk level, anomaly status, and automated SOC Defense Actions (BLOCK_SOURCE_IP, QUARANTINE_PORT, LOG_EVENT).
+
+![Traffic Analyzer — Single packet inspector, preset loaders, batch stream inspector, and defense action response cards](screenshots/analyzer_page.jpg)
+
+#### Screenshot 3: Security Incident Alerts Console
+
+The Alerts page shows incident alert cards organized by tabs (All Alerts, Active, Resolved, Zero-Day Alerts). Each card displays Alert ID, Timestamp, Attack Type, Risk Level badge, Source IP address, and Anomaly Score with actionable Resolve and View Details buttons. Zero-Day flagged alerts are highlighted with special badges. An Export JSON Report button enables incident documentation.
+
+![Security Alerts Console — Incident alert cards with zero-day flags, resolution actions, and JSON export](screenshots/alerts_page.jpg)
+
+#### Screenshot 4: Model Benchmarks & Statistics Analytics
+
+The Statistics page presents an Empirical Benchmark Summary table comparing model metrics (Random Forest at 75.20% accuracy, Isolation Forest at 71.80%), a 5×5 Confusion Matrix grid visualization for the Random Forest classifier, a Network Attack Distribution interactive chart with Donut/Bar/Area view switcher, and embedded Viva Reference Cards for academic defense preparation.
+
+![Statistics & Analytics — Benchmark tables, confusion matrix, attack distribution charts, and viva reference cards](screenshots/statistics_page.jpg)
+
+#### Screenshot 5: Network Attack Distribution Chart
+
+The interactive Recharts-powered donut chart visualizes the NSL-KDD dataset attack category distribution: Normal (53.39%), DoS (29.45%), Probe (11.97%), R2L (3.88%), and U2R (1.31%). Users can switch between Donut View, Bar View, and Area View for different analytical perspectives.
+
+![Network Attack Distribution — Interactive donut chart with attack category percentages and multi-view switcher](screenshots/attack_chart.jpg)
+
+#### Screenshot 6: FastAPI Swagger UI — Interactive API Documentation
+
+The FastAPI backend exposes interactive Swagger UI documentation (OpenAPI 3.0) at the `/docs` endpoint. All REST API endpoints are documented: `POST /predict`, `POST /predict/batch`, `GET /predict/history`, `GET /alerts`, `PATCH /alerts/{id}/resolve`, `GET /statistics`, and `GET /health`. Each endpoint supports live "Try it out" testing directly from the browser.
+
+![FastAPI Swagger UI — Interactive API documentation with all REST endpoints for the Cybersecurity Profiler API v2.4.0](screenshots/api_docs_page.jpg)
+
+---
+
 ## 5. Learning Outcomes
 
 ### 5.1 Technical Skills
@@ -605,6 +648,12 @@ network-intrusion-detection/
 │   └── network_ids.db              # Persistent SQLite database file
 │
 ├── screenshots/
+│   ├── dashboard_page.jpg          # SOC Executive Dashboard screenshot
+│   ├── analyzer_page.jpg           # Traffic Analyzer & Inspector screenshot
+│   ├── alerts_page.jpg             # Security Incident Alerts screenshot
+│   ├── statistics_page.jpg         # Model Benchmarks & Analytics screenshot
+│   ├── attack_chart.jpg            # Network Attack Distribution chart screenshot
+│   ├── api_docs_page.jpg           # FastAPI Swagger UI documentation screenshot
 │   ├── confusion_matrix.png        # Generated test set confusion matrix plot
 │   └── f1_scores.png               # Generated F1-score comparison chart
 │
