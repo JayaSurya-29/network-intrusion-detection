@@ -545,33 +545,9 @@ Deployed via a FastAPI backend and an enterprise React + Vite dashboard, the pro
 
 ## Project Architecture
 
-```
-                                [ NSL-KDD DATASET ]
-                             (125,973 Train / 22,544 Test)
-                                          |
-                                          v
-                       [ LEAKAGE-FREE PREPROCESSING PIPELINE ]
-                       (OneHotEncoder & StandardScaler on Train)
-                                          |
-                   +----------------------+----------------------+
-                   |                                             |
-                   v                                             v
-    [ RANDOM FOREST CLASSIFIER ]                  [ ISOLATION FOREST ANOMALY ]
-  (Supervised Signature Classification)         (Unsupervised Baseline Anomaly)
-                   |                                             |
-                   +----------------------+----------------------+
-                                          |
-                                          v
-                         [ UNIFIED THREAT PROFILER ENGINE ]
-                      (Risk Level Matrix & Defense Action Generator)
-                                          |
-                                          v
-                           [ FASTAPI BACKEND API (:8000) ]
-                             (Persistent SQLite Database)
-                                          |
-                                          v
-                      [ ENTERPRISE REACT DASHBOARD (:5173) ]
-```
+The following diagram illustrates the complete end-to-end system architecture of the Cybersecurity Network Threat & Intrusion Profiler, showing the data flow from the NSL-KDD dataset through the dual ML engine, unified threat profiler, backend API, persistent database, and enterprise React dashboard, with cloud deployment on Render.
+
+![Cybersecurity Network Threat & Intrusion Profiler — Complete System Architecture Diagram](screenshots/project_architecture.jpg)
 
 ---
 
